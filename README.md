@@ -1,73 +1,96 @@
-# React + TypeScript + Vite
+# Tiny Collab 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A real-time collaborative code editor built for speed and simplicity.
 
-Currently, two official plugins are available:
+![Tiny Collab](https://img.shields.io/badge/Status-Active-success)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## React Compiler
+- **Real-time Collaboration**: Multiple users can edit the same document efficiently using CRDTs (Yjs).
+- **Code Execution**: Run your code instantly in the browser. Supports **JavaScript, TypeScript, Python, Java, and C#**.
+- **Room System**: Create dynamic rooms by simple URL navigation or using the built-in room switcher.
+- **Modern UI**: Sleek, VS Code-inspired Dark Theme.
+- **Monaco Editor**: Powered by the same engine as VS Code for a premium editing experience.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+### Frontend (`/frontend`)
+- **React 19**: UI Framework.
+- **Vite**: Ultra-fast build tool.
+- **Monaco Editor** (`@monaco-editor/react`): The code editor component.
+- **Yjs** & **y-monaco**: For shared state management and editor binding.
+- **WebSocket** (`y-websocket`): For communicating with the synchronization server.
+- **Piston API**: External API used for executing code safely in a sandboxed environment.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Backend (`/backend`)
+- **Node.js**: Runtime environment.
+- **ws**: Lightweight WebSocket library.
+- **Yjs**: Handles the conflict-free replication of data on the server side.
+- **In-Memory Storage**: Room state is currently held in memory.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🚀 Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Prerequisites
+- Node.js (v18+)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd tiny-collab
+   ```
+
+2. **Setup Backend**
+   ```bash
+   cd backend
+   npm install
+   npm run dev
+   # Runs on ws://localhost:1234
+   ```
+
+3. **Setup Frontend** (in a new terminal)
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   # Runs on http://localhost:5173
+   ```
+
+4. **Open in Browser**
+   Navigate to `http://localhost:5173`. 
+   - Share the URL to collaborate.
+   - Type a new room name in the top bar to switch rooms.
+
+## 📂 Project Structure
+
+```
+tiny-collab/
+├── backend/          # Node.js WebSocket Server
+│   ├── server.mjs    # Main server logic (Room handling, Yjs sync)
+│   └── package.json
+└── frontend/         # React + Vite Client
+    ├── src/
+    │   ├── App.tsx   # Main UI & Logic (Editor, Terminal, State)
+    │   ├── styles.css# Dark Theme & Layout styles
+    │   └── ws-yjs.ts # WebSocket provider helper
+    └── package.json
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🔌 API Usage
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+**Code Execution** is handled by sending code to the public [Piston API](https://github.com/engineer-man/piston).
+- Endpoint: `https://emkc.org/api/v2/piston/execute`
+- Method: `POST`
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🔮 Roadmap (Future Features)
+
+- [ ] **User Authentication**: Sign up/Login (GitHub/Google Auth) to save your snippets.
+- [ ] **Cloud Persistence**: Save documents to a database (MongoDB/PostgreSQL) instead of in-memory only.
+- [ ] **Multi-File Support**: Sidebar file explorer to manage multiple files in one room.
+- [ ] **In-Room Chat**: Text or voice chat to communicate with collaborators.
+- [ ] **Interactive Terminal**: Real input support for running programs (e.g., `input()`).
+- [ ] **Custom Themes**: Allow users to switch between Light/Dark/High Contrast themes.
+
+---
+*Built with ❤️ by Aman*
