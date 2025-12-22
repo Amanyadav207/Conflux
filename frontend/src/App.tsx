@@ -106,11 +106,29 @@ export default function App() {
   // Switch language helper
   const handleLanguageChange = (newLang: LanguageKey) => {
     setLanguage(newLang);
-    // Note: We don't automatically change the code content to preserve collaboration state.
-    // However, we should update the syntax highlighting model if possible.
+
+    // Update syntax highlighting
     if (editorRef.current && monacoRef.current) {
       const model = editorRef.current.getModel();
       monacoRef.current.editor.setModelLanguage(model, LANGUAGES[newLang].monacoLanguage);
+    }
+
+    // Insert Default Code (User requested)
+    if (ytext) {
+      ytext.delete(0, ytext.length); // Clear existing
+      ytext.insert(0, LANGUAGES[newLang].defaultCode); // Insert new
+    }
+  };
+
+  const handleRoomChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const newRoom = (e.currentTarget as HTMLInputElement).value.trim();
+      if (newRoom && newRoom !== room) {
+        // Simple reload to switch rooms cleanly
+        const url = new URL(window.location.href);
+        url.searchParams.set("room", newRoom);
+        window.location.href = url.toString();
+      }
     }
   };
 
@@ -166,7 +184,13 @@ export default function App() {
         <div className="left-group">
           <span className="brand">TinyCollab</span>
           <span className="kv">
-            Room: <code>{room}</code>
+            Room:
+            <input
+              className="room-input"
+              defaultValue={room}
+              onKeyDown={handleRoomChange}
+              title="Press Enter to switch room"
+            />
           </span>
           <span className="kv">
             <span className={`dot ${connected ? "ok" : "bad"}`} />
