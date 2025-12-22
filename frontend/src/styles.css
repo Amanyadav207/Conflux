@@ -1,10 +1,213 @@
 /* ---------------------------- */
-/* 🔧 Base Setup */
+/* 🔧 Base Setup (Dark Theme) */
 /* ---------------------------- */
+:root {
+  --bg-dark: #0f172a;
+  --bg-panel: #1e293b;
+  --bg-editor: #1e1e1e;
+  /* VS Code defaultish */
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --accent-primary: #3b82f6;
+  --accent-hover: #2563eb;
+  --border-color: #334155;
+  --success: #22c55e;
+  --error: #ef4444;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial;
+  color: var(--text-primary);
+  background-color: var(--bg-dark);
+  overflow: hidden;
+  /* Prevent body scroll */
+}
+
+/* ---------------------------- */
+/* 🌐 App Layout */
+/* ---------------------------- */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ---------------------------- */
+/* 🔝 Top Navigation Bar */
+/* ---------------------------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 16px;
+  height: 50px;
+  background-color: var(--bg-panel);
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.left-group,
+.right-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Logo/Brand */
+.brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: -0.5px;
+  color: #fff;
+}
+
+/* Room + Status badges */
+.kv {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+.kv code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: var(--accent-primary);
+}
+
+/* Status Dot */
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--error);
+}
+
+.dot.ok {
+  background-color: var(--success);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.4);
+}
+
+/* ---------------------------- */
+/* 🧭 Buttons */
+/* ---------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  background-color: var(--accent-primary);
+  color: white;
+}
+
+.btn:hover {
+  background-color: var(--accent-hover);
+}
+
+.btn.secondary {
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.btn.secondary:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+}
+
+.btn.run-btn {
+  background-color: var(--success);
+  color: #000;
+  font-weight: 600;
+}
+
+.btn.run-btn:hover {
+  filter: brightness(1.1);
+}
+
+/* ---------------------------- */
+/* 📐 Main Content Split */
+/* ---------------------------- */
+.main-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* Editor Wrapper */
+.editor-wrap {
+  flex: 1;
+  /* Takes remaining space */
+  position: relative;
+  background-color: var(--bg-editor);
+}
+
+/* Output Panel */
+.output-panel {
+  width: 350px;
+  background-color: var(--bg-panel);
+  border-left: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+}
+
+.output-header {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.output-content {
+  flex: 1;
+  padding: 12px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+  overflow-y: auto;
+}
+
+.output-content.placeholder {
+  color: var(--text-secondary);
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 html,
@@ -102,10 +305,12 @@ body {
     transform: scale(1);
     opacity: 0.8;
   }
+
   50% {
     transform: scale(1.25);
     opacity: 1;
   }
+
   100% {
     transform: scale(1);
     opacity: 0.8;
