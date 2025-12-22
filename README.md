@@ -1,8 +1,8 @@
-# Tiny Collab 🚀
+# Conflux 🚀
 
 A real-time collaborative code editor built for speed and simplicity.
 
-![Tiny Collab](https://img.shields.io/badge/Status-Active-success)
+![Conflux](https://img.shields.io/badge/Status-Active-success)
 
 ## ✨ Features
 
