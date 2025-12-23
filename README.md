@@ -37,8 +37,8 @@ A real-time collaborative code editor built for speed and simplicity.
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
-   cd tiny-collab
+   git clone https://github.com/Amanyadav207/Conflux)
+   cd Conflux
    ```
 
 2. **Setup Backend**
